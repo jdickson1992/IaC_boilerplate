@@ -1,0 +1,14 @@
+---
+- name: Copying docker stack to master
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/../docker/docker-stack.yml"
+    dest: "/tmp/"
+    owner: ec2-user
+    mode: '0777'
+
+- name: Deploy stack from a compose file
+  docker_stack:
+    state: present
+    name: swarm
+    compose:
+      - '/tmp/docker-stack.yml'

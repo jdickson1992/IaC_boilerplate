@@ -1,0 +1,18 @@
+--- 
+    - name: Create user account. Add to group docker
+      user:
+        name: "{{ item }}"
+        groups: "docker"
+      with_items: "{{ users }}"
+
+    - name: Add ec2-user to docker group
+      user:
+        name: "ec2-user"
+        groups: "docker"
+        append: true
+
+    - name: "Add authorized public key for user"
+      authorized_key:
+        user: "{{ item }}"
+        key: "{{ lookup('file', '../files/id_rsa.pub') }}"
+      with_items: "{{ users }}"      

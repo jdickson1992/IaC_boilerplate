@@ -1,0 +1,22 @@
+---
+- name: Ensure docker deamon is running
+  service:
+    name: docker
+    state: started
+ 
+- name: Initialize Docker Swarm
+  docker_swarm:
+    state: present
+  run_once: true
+  tags: swarm
+
+- name: Get the Manager join-token
+  shell: docker swarm join-token --quiet manager
+  register: manager_token
+  tags: swarm
+
+- name: Get the worker join-token
+  shell: docker swarm join-token --quiet worker
+  register: worker_token
+  tags: swarm
+  

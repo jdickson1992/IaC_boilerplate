@@ -1,0 +1,10 @@
+---
+- name: workers leave the swarm
+  hosts: workers
+  roles:
+    - leave-swarm
+
+- name: managers leave the swarm
+  hosts: manager
+  roles:
+    - leave-swarm

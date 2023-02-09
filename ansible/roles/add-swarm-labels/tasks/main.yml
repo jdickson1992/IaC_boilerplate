@@ -1,0 +1,9 @@
+- name: Copying shell script
+  ansible.builtin.copy:
+    src: "{{ role_path }}/scripts/add_labels.sh"
+    dest: "/tmp/"
+    owner: ec2-user
+    mode: '0777'
+
+- name: Executing add_labels.sh to tag swarm docker-nodes
+  shell: '. /tmp/add_labels.sh'

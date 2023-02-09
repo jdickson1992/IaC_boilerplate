@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+
+  nginx:
+    image: nginx:stable-alpine
+    command: /docker-entrypoint.sh nginx -g 'daemon off;'
+    environment:
+      - ACTIVE_BACKEND=app1
+      - BACKUP_BACKEND=app2
+    ports:
+      - 80:80 
+    deploy:
+      replicas: 1
+      placement:
+        constraints: 
+          - node.hostname == swarm-manager-0
+
+  app1:
+    image: irishbandit/devblog:flask-v1
+    hostname: "app1-{{.Node.Hostname}}-{{.Task.ID}}"
+    ports:
+      - 8080:8080
+    environment:
+      - DEPLOYMENT=GREEN
+    command: python app.py
+    deploy:
+      replicas: 4
+      placement:
+        constraints: 
+          - node.labels.deployment == green
+          - node.hostname != swarm-manager-0
+
+  app2:
+    image: irishbandit/devblog:flask-v1
+    hostname: "app2-{{.Node.Hostname}}-{{.Task.ID}}"
+    ports:
+      - 8081:8080
+    environment:
+      - DEPLOYMENT=BLUE
+    command: python app.py
+    deploy:
+      replicas: 4
+      placement:
+        constraints: 
+          - node.labels.deployment == blue
+          - node.hostname != swarm-manager-0
+
