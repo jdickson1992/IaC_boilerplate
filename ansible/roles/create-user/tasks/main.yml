@@ -1,4 +1,5 @@
 --- 
+
     - name: Create user account. Add to group docker
       user:
         name: "{{ item }}"
@@ -11,8 +12,9 @@
         groups: "docker"
         append: true
 
-    - name: "Add authorized public key for user"
+    - name: "Add public key to authorized hosts for user"
       authorized_key:
         user: "{{ item }}"
-        key: "{{ lookup('file', '../files/id_rsa.pub') }}"
-      with_items: "{{ users }}"      
+        key: "{{ lookup('file', '{{ playbook_dir }}/../terraform/test.pub') }}"
+      with_items: "{{ users }}" 
+  
