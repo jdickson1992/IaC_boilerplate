@@ -1,5 +1,5 @@
 ## What does it do? 🔎
-This repo will create a full `Infrastructure as Code` (IaC) system, from provisioning to deployment using:
+This repo will create a full `Infrastructure as Code` (IaC) environment, from **provisioning** to **deployment** using:
 
 - `Terraform` to provision resources on the cloud
 - `Ansible` to setup infra on the cloud and initialise the **Docker Swarm** cluster
