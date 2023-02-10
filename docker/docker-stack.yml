@@ -4,21 +4,23 @@ services:
 
   nginx:
     image: nginx:stable-alpine
-    command: /docker-entrypoint.sh nginx -g 'daemon off;'
+    command: sh -c "envsubst < /etc/nginx/conf.d/default.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'" 
     environment:
-      - ACTIVE_BACKEND=app1
-      - BACKUP_BACKEND=app2
+      - ACTIVE_BACKEND=green-app
+      - BACKUP_BACKEND=blue-app
     ports:
-      - 80:80 
+      - 80:80
+    volumes:
+      - /tmp/default.template:/etc/nginx/conf.d/default.template
     deploy:
       replicas: 1
       placement:
         constraints: 
           - node.hostname == swarm-manager-0
 
-  app1:
+  green-app:
     image: irishbandit/devblog:flask-v1
-    hostname: "app1-{{.Node.Hostname}}-{{.Task.ID}}"
+    hostname: "green-app-{{.Node.Hostname}}-{{.Task.ID}}"
     ports:
       - 8080:8080
     environment:
@@ -31,9 +33,9 @@ services:
           - node.labels.deployment == green
           - node.hostname != swarm-manager-0
 
-  app2:
+  blue-app:
     image: irishbandit/devblog:flask-v1
-    hostname: "app2-{{.Node.Hostname}}-{{.Task.ID}}"
+    hostname: "blue-app-{{.Node.Hostname}}-{{.Task.ID}}"
     ports:
       - 8081:8080
     environment:

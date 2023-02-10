@@ -1,0 +1,6 @@
+---
+- name: Destroying resources created by Terraform
+  shell: |
+    cd {{ playbook_dir }}/../terraform/
+    terraform workspace select IaC_Swarm
+    terraform destroy -auto-approve

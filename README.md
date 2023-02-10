@@ -5,12 +5,16 @@ This repo will create a full `Infrastructure as Code` (IaC) environment, from **
 - `Ansible` to setup infra on the cloud and initialise the **Docker Swarm** cluster
 - `Ansible` to deploy the docker stacks on the cloud infra.
 
+---
+
 ## Prerequisites 🔐
 
 -  `Ansible`   **>=2.8**
 -  `Terraform` **>=0.12**
 
 Access to a cloud provider account (This has only been tested on **AWS**)
+
+> ⚠️ You will need to get programmatic access keys from AWS which have permissions to configure infra using Terraform
 
 ---
 

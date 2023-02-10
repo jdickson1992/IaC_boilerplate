@@ -2,12 +2,12 @@
 - name: Ensure docker deamon is running
   service:
     name: docker
-    state: started
+    state: restarted
  
 - name: Initialize Docker Swarm
   docker_swarm:
     state: present
-  run_once: true
+  run_once: true #If i've multiple managers, run on first
   tags: swarm
 
 - name: Get the Manager join-token

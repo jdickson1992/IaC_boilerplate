@@ -1,0 +1,6 @@
+---
+- name: Deleting resources created by Terraform
+  hosts: localhost
+  connection: local
+  roles: 
+    - destroy-infra

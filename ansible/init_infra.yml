@@ -1,0 +1,6 @@
+---
+- name: Init terraform
+  hosts: localhost
+  connection: local
+  roles: 
+    - init-infra

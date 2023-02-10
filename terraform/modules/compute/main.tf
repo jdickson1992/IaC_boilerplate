@@ -11,10 +11,13 @@ data "aws_ami" "ami" {
   }
 }
 
-
-data "aws_subnet_ids" "current" {
-  vpc_id = var.vpc_id
+data "aws_subnets" "current" {
+  filter {
+    name = "vpc-id"
+    values = [var.vpc_id]
+  }
 }
+
 
 # -----------------------------------------------------------------------------
 # Private key
@@ -30,9 +33,15 @@ resource "aws_key_pair" "testKeyPair" {
   public_key = tls_private_key.tls_connector.public_key_openssh
 }
 
-resource "local_file" "sandboxFile" {
+resource "local_file" "priv_key" {
   content         = tls_private_key.tls_connector.private_key_pem
   filename        = "test.pem"
+  file_permission = "0600"
+}
+
+resource "local_file" "pub_key" {
+  content         = tls_private_key.tls_connector.public_key_openssh
+  filename        = "test.pub"
   file_permission = "0600"
 }
 
@@ -43,7 +52,7 @@ resource "local_file" "sandboxFile" {
 resource "aws_instance" "swarm-manager" {
   count                  = var.swarm_managers
   ami                    = data.aws_ami.ami.id
-  subnet_id              = tolist(data.aws_subnet_ids.current.ids)[count.index % length(data.aws_subnet_ids.current.ids)]
+  subnet_id              = tolist(data.aws_subnets.current.ids)[count.index % length(data.aws_subnets.current.ids)]
   instance_type          = var.swarm_manager_instance
   key_name               = aws_key_pair.testKeyPair.key_name
   vpc_security_group_ids = [var.security_group]
@@ -69,7 +78,7 @@ resource "aws_instance" "swarm-manager" {
 resource "aws_instance" "swarm-worker" {
   count                  = var.swarm_workers
   ami                    = data.aws_ami.ami.id
-  subnet_id              = tolist(data.aws_subnet_ids.current.ids)[count.index % length(data.aws_subnet_ids.current.ids)]
+  subnet_id              = tolist(data.aws_subnets.current.ids)[count.index % length(data.aws_subnets.current.ids)]
   instance_type          = var.swarm_worker_instance
   key_name               = aws_key_pair.testKeyPair.key_name
   vpc_security_group_ids = [var.security_group]
