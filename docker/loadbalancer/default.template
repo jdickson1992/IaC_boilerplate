@@ -6,5 +6,5 @@ server {
 }
 upstream swarm-backend {
    server ${ACTIVE_BACKEND}:8080;
-   server ${BACKUP_BACKEND}:8081 backup;
+   server ${BACKUP_BACKEND}:8080 backup;
 }

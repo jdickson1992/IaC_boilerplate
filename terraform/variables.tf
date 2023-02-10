@@ -30,7 +30,7 @@ variable "swarm_manager_instance" {
 
 variable "swarm_managers" {
   description = "The number of swarm managers to create"
-  default     = 1
+  default     = 3
 }
 
 variable "swarm_worker_instance" {
@@ -41,7 +41,7 @@ variable "swarm_worker_instance" {
 
 variable "swarm_workers" {
   description = "The number of swarm managers to create"
-  default     = 2
+  default     = 3
 }
 
 variable "root_volume_size" {

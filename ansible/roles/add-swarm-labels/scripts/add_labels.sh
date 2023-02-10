@@ -1,7 +1,17 @@
 #!/bin/bash
 
-# Get the number of nodes in the swarm
-nodes=$(docker node ls --format "{{.Hostname}}" | wc -l)
+managers=$(docker node ls --format "{{.Hostname}}" | grep 'manager')
+for node in $managers; do
+  docker node update --label-add type=manager $node
+done
+
+workers=$(docker node ls --format "{{.Hostname}}" | grep 'worker')
+for node in $workers; do
+  docker node update --label-add type=worker $node
+done
+
+# Get the number of worker nodes in the swarm
+nodes=$(docker node ls --filter node.label=type=worker --format "{{.Hostname}}"| wc -l)
 
 # Divide the nodes between green_nodes and blue_nodes
 if (( nodes % 2 == 0 )); then
@@ -22,3 +32,5 @@ for node in $(docker node ls --format "{{.Hostname}}"); do
   fi
   ((counter++))
 done
+
+
