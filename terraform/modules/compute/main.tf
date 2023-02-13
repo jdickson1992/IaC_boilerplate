@@ -18,7 +18,6 @@ data "aws_subnets" "current" {
   }
 }
 
-
 # -----------------------------------------------------------------------------
 # Private key
 # Createsa temporary private key which will be used for testing ssh access to swarm servers
@@ -70,7 +69,7 @@ resource "aws_instance" "swarm-manager" {
 
   tags = {
     Terraform   = "true"
-    Name        = "swarm-manager"
+    Name        = "swarm-manager-${count.index}"
     Environment = "${var.environment}"
   }
 }

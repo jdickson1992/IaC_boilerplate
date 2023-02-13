@@ -19,6 +19,7 @@ module "security" {
   source     = "./modules/security"
   depends_on = [module.network]
   vpc_id     = module.network.vpc_id
+  vpc_cidr_block = module.network.vpc_cidr
 }
 
 module "compute" {

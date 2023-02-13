@@ -11,18 +11,18 @@ services:
     ports:
       - 80:80
     volumes:
-      - /tmp/default.template:/etc/nginx/conf.d/default.template
+      - /opt/default.template:/etc/nginx/conf.d/default.template
     deploy:
       replicas: 1
       placement:
         constraints: 
-          - node.hostname == swarm-manager-0
+          - node.labels.type == manager
 
   green-app:
-    image: irishbandit/devblog:flask-v1
+    image: irishbandit/devblog:flask-v2
     hostname: "green-app-{{.Node.Hostname}}-{{.Task.ID}}"
     ports:
-      - 8080:8080
+      - 8080
     environment:
       - DEPLOYMENT=GREEN
     command: python app.py
@@ -31,13 +31,13 @@ services:
       placement:
         constraints: 
           - node.labels.deployment == green
-          - node.hostname != swarm-manager-0
+          - node.labels.type != manager
 
   blue-app:
-    image: irishbandit/devblog:flask-v1
+    image: irishbandit/devblog:flask-v2
     hostname: "blue-app-{{.Node.Hostname}}-{{.Task.ID}}"
     ports:
-      - 8081:8080
+      - 8080
     environment:
       - DEPLOYMENT=BLUE
     command: python app.py
@@ -46,5 +46,4 @@ services:
       placement:
         constraints: 
           - node.labels.deployment == blue
-          - node.hostname != swarm-manager-0
-
+          - node.labels.type != manager

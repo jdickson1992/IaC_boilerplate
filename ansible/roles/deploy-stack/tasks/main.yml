@@ -2,14 +2,14 @@
 - name: Copying docker stack to master
   ansible.builtin.copy:
     src: "{{ playbook_dir }}/../docker/docker-stack.yml"
-    dest: "/tmp/"
+    dest: "/opt/"
     owner: ec2-user
     mode: '0777'
 
 - name: Copying nginx template to remote
   ansible.builtin.copy:
     src: "{{ playbook_dir }}/../docker/loadbalancer/default.template"
-    dest: "/tmp/"
+    dest: "/opt/"
     owner: ec2-user
     mode: '0777'
 
@@ -18,4 +18,4 @@
     state: present
     name: swarm
     compose:
-      - '/tmp/docker-stack.yml'
+      - '/opt/docker-stack.yml'

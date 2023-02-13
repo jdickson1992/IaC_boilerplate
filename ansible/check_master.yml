@@ -1,0 +1,5 @@
+---
+- name: Check swarm status
+  hosts: manager
+  roles: 
+    - swarm-manager

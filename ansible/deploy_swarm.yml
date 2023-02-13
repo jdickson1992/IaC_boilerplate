@@ -1,10 +1,9 @@
 ---
-- name: install pkgs & docker engine
+- name: install packages
   hosts: docker-nodes
   become: yes
   roles: 
     - docker-installation
-
 
 - name: create a new user account
   hosts: docker-nodes
@@ -16,12 +15,20 @@
      - create-user
 
 - name: initialize docker swarm
-  hosts: swarm-manager
+  hosts: swarm-manager-0
   become: yes
   vars:
     ansible_python_interpreter: /usr/bin/python3.8
   roles:
     - swarm-init
+
+- name: Add managers to the swarm
+  hosts: managers
+  become: yes
+  vars:
+    ansible_python_interpreter: /usr/bin/python3.8
+  roles: 
+    - swarm-manager
 
 - name: add workers to the swarm
   hosts: workers
@@ -32,7 +39,15 @@
     - swarm-worker
 
 - name: Add labels to each node in the swarm
-  hosts: swarm-manager
+  hosts: swarm-manager-0
   become: yes
   roles:
     - add-swarm-labels
+
+- name: Deploy docker stack for blue-green deployment 
+  hosts: swarm-manager-0
+  become: yes
+  vars:
+    ansible_python_interpreter: /usr/bin/python3.8
+  roles:
+    - deploy-stack

@@ -9,6 +9,7 @@ PURPLE='\033[1;35m'
 NC='\033[0m' # No Color
 
 ANSIBLE_DIR=$(pwd)/ansible
+TERRAFORM_DIR=$(pwd)/terraform
 GROUP_VARS_DIR=$ANSIBLE_DIR/group_vars
 ALL_YML_FILE=$GROUP_VARS_DIR/all.yml
 
@@ -43,7 +44,7 @@ done
 
 # Read the user's choice
 while true; do
-  read -p "Enter your choice: " choice
+  read -p "Enter your choice [number]: " choice
   if [[ $choice =~ ^[0-9]+$ ]]; then
     if [[ $choice -gt 0 && $choice -le ${#options[@]} ]]; then
       echo -e "${GREEN}You have selected ${options[$((choice-1))]}.${NC}"
@@ -54,6 +55,11 @@ while true; do
          ansible-playbook init_infra.yml
          sleep 10
          ansible-playbook deploy_swarm.yml
+         sleep 10
+         cd $TERRAFORM_DIR
+         ssh -i test.pem $(terraform output swarm_manager_public_ip | tr -d '"') docker node ls
+         echo -e "\n"
+         ssh -i test.pem $(terraform output swarm_manager_public_ip | tr -d '"') docker service ls
          break
         ;;
     deploy_swarm)

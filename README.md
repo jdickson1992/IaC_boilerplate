@@ -71,3 +71,18 @@ docker node update --label-add deployment=blue swarm-worker-3
 To filter by label:
 
 `docker node ls --filter node.label=deployment=blue`
+
+
+
+```bash
+ssh -i test.pem $(terraform output swarm_manager_public_ip | tr -d '"') docker node ls
+```
+
+```
+alias terraform_ssh="ssh -i test.pem $(terraform output swarm_manager_public_ip | tr -d '"')"
+```
+
+
+```
+terraform_ssh docker service update --env-add ACTIVE_BACKEND=blue-app --env-add BACKUP_BACKEND=green-app swarm_nginx
+```

@@ -9,7 +9,7 @@ ${hostname} ansible_host=${manager_ip[index]}
 ${hostname} ansible_host=${worker_ip[index]}
 %{ endfor ~}
 
-[manager]
+[managers]
 %{ for index,hostname in manager ~}
 ${hostname} ansible_host=${manager_ip[index]}
 %{ endfor ~}
@@ -23,3 +23,4 @@ ${hostname} ansible_host=${worker_ip[index]}
 ansible_connection=ssh
 ansible_user=ec2-user
 ansible_ssh_private_key_file=../terraform/test.pem
+ansible_ssh_extra_args="-o IdentitiesOnly=yes"

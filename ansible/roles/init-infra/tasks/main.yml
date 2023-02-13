@@ -4,7 +4,7 @@
     cd {{ playbook_dir }}/../terraform/
     terraform init
 
-- name: Running terraform plan for [IaC_Swarm]
+- name: Running terraform apply for [IaC_Swarm]
   shell: |
     cd {{ playbook_dir }}/../terraform/
     terraform apply -auto-approve;
