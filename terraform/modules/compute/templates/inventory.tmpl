@@ -1,7 +1,7 @@
 [admin]
 local_client ansible_host=127.0.0.1 ansible_connection=local
 
-[docker-nodes]
+[docker_nodes]
 %{ for index,hostname in manager ~}
 ${hostname} ansible_host=${manager_ip[index]}
 %{ endfor ~}
@@ -19,7 +19,7 @@ ${hostname} ansible_host=${manager_ip[index]}
 ${hostname} ansible_host=${worker_ip[index]}
 %{ endfor ~}
 
-[docker-nodes:vars]
+[docker_nodes:vars]
 ansible_connection=ssh
 ansible_user=ec2-user
 ansible_ssh_private_key_file=../terraform/test.pem

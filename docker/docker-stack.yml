@@ -13,10 +13,13 @@ services:
     volumes:
       - /opt/default.template:/etc/nginx/conf.d/default.template
     deploy:
-      replicas: 1
+      replicas: 3
       placement:
         constraints: 
           - node.labels.type == manager
+      update_config:
+        parallelism: 1  #The number of containers to update at a time
+        delay: 0s
 
   green-app:
     image: irishbandit/devblog:flask-v2

@@ -9,6 +9,6 @@
     cd {{ playbook_dir }}/../terraform/
     terraform apply -auto-approve;
 
-- name: Waiting for 30s to allow changes to propogate
+- name: Waiting for 15s to allow changes to propogate
   ansible.builtin.pause:
-    seconds: 30
+    seconds: 15

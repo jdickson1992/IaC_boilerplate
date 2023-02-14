@@ -11,78 +11,82 @@ This repo will create a full `Infrastructure as Code` (IaC) environment, from **
 
 -  `Ansible`   **>=2.8**
 -  `Terraform` **>=0.12**
+-  `aws cli`
 
 Access to a cloud provider account (This has only been tested on **AWS**)
 
-> ⚠️ You will need to get programmatic access keys from AWS which have permissions to configure infra using Terraform
+> ⚠️ You will need to get programmatic access keys from AWS which have permissions to configure infra using Terraform.
+>
+> Follow this [link](https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html) to retreive an access key.
+
+When the above step has been completed, configure the credentials and associate them with a profile:
+
+```bash
+aws configure --profile terraform
+AWS Access Key ID [None]: <enter the access key>
+AWS Secret Access Key [None]: <enter the secret key>
+Default region name [None]: <us-east-1>
+Default output format [None]: <None>
+```
+
+Then set the `AWS_PROFILE` to be active in your current shell.
+
+```bash
+export AWS_PROFILE=terraform
+```
+
+You should now have permissions to provision resources via terraform 🚀
 
 ---
 
-## Useful commands
+## Getting Started
+
+Clone the repo and cd into the directory:
 
 ```bash
-ansible docker-nodes -m ping -i inventory.ini
+git@github.com:jdickson1992/IaC_boilerplate.git && cd IaC_boilerplate
 ```
 
-Drop a publc key file inside `${PWD}/roles/create-user/files`
+Execute the bash script `./deploy.sh`:
+
+This script will present you with 3 options **[Enter the number associated with the option]**
+
+  1. **full_iac** *[recommended]*
+     1. Will provision the cloud infra & initiate a docker swarm cluster.
+     2. A simple docker stack should be deployed to confirm the cluster is operational
+
+  2. **delete_swarm** 
+     1. Forces all nodes to leave swarm
 
 
-## Docker contexts
+  3. **destroy_iac**
+     1. Destroys all infra created via terraform.
+     2. **Run this when finished testing**.
 
-Create and use context to target remote host:
 
-```bash
-docker context create remote --docker "host=ssh://james@..."
+
+
+---
+
+The script `./switch_traffic.sh` can be used to illustrate how **traffic is switched** between green / blue applications.
+
+Under the covers this is just running a *docker service update* command:
+```
+... docker service update --env-add ACTIVE_BACKEND=green-app --env-add BACKUP_BACKEND=blue-app swarm_nginx
 ```
 
-```bash
-docker context ls
-```
+---
 
-```bash
-docker --context remote ps
-```
+## Finished?
 
-```bash
-docker context use remote
-```
+Execute the bash script `deploy.sh` again. 
 
-```bash
-docker service create --replicas 3 --name nginx3nodes nginx
-```
+Specify option `3`.
+
+This will destroy everything Terraform created.
 
 
 
-List nodes:
-
-```bash
-docker node ls --format "{{.Hostname}}"
-```
-
-
-```bash
-docker node update --label-add deployment=green swarm-manager-0
-```
-
-```bash
-docker node update --label-add deployment=blue swarm-worker-3
-```
-
-To filter by label:
-
-`docker node ls --filter node.label=deployment=blue`
 
 
 
-```bash
-ssh -i test.pem $(terraform output swarm_manager_public_ip | tr -d '"') docker node ls
-```
-
-```
-alias terraform_ssh="ssh -i test.pem $(terraform output swarm_manager_public_ip | tr -d '"')"
-```
-
-
-```
-terraform_ssh docker service update --env-add ACTIVE_BACKEND=blue-app --env-add BACKUP_BACKEND=green-app swarm_nginx
-```

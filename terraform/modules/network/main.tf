@@ -1,5 +1,14 @@
 data "aws_availability_zones" "available" {}
 
+# Creating subnets dynamically from CIDR blocks
+locals {
+  public_subnets = [
+    cidrsubnet(aws_vpc.main.cidr_block,8,1),
+    cidrsubnet(aws_vpc.main.cidr_block,8,2),
+    cidrsubnet(aws_vpc.main.cidr_block,8,3)
+  ]
+}
+
 # Internet VPC
 resource "aws_vpc" "main" {
   cidr_block           = "${var.vpc_cidr_prefix}.0.0/16"
@@ -24,18 +33,12 @@ resource "aws_internet_gateway" "igw" {
 
 # Subnets
 resource "aws_subnet" "public_subnets" {
-  count = length(var.public_subnets)
+  count = length(local.public_subnets)
 
   vpc_id                  = aws_vpc.main.id
   availability_zone       = element(var.availability_zones, count.index)
   map_public_ip_on_launch = true
-  cidr_block = lookup(
-    var.public_subnets,
-    element(
-      var.availability_zones,
-      count.index
-    )
-  )
+  cidr_block = element(local.public_subnets, count.index)
   depends_on = [
     aws_internet_gateway.igw
   ]
@@ -63,7 +66,7 @@ resource "aws_route" "to_public_internet_route" {
 }
 
 resource "aws_route_table_association" "public_subnet_route_table_assoc" {
-  count = length(var.public_subnets)
+  count = length(local.public_subnets)
 
   subnet_id      = aws_subnet.public_subnets[count.index].id
   route_table_id = aws_route_table.public_route_table.id
