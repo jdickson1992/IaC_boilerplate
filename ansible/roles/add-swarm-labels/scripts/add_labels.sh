@@ -24,7 +24,7 @@ fi
 
 # Add the label to the green nodes
 counter=0
-for node in $(docker node ls --format "{{.Hostname}}"); do
+for node in $(docker node ls --format "{{.Hostname}}" --filter node.label=type=worker); do
   if (( counter < green_nodes )); then
     docker node update --label-add deployment=green $node
   else

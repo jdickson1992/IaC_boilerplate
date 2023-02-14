@@ -6,13 +6,6 @@
     owner: ec2-user
     mode: '0777'
 
-- name: Copying nginx template to remote
-  ansible.builtin.copy:
-    src: "{{ playbook_dir }}/../docker/loadbalancer/default.template"
-    dest: "/opt/"
-    owner: ec2-user
-    mode: '0777'
-
 - name: Deploy stack from a compose file
   docker_stack:
     state: present

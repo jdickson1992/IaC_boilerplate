@@ -24,15 +24,14 @@ echo "dev_user: $username" > $ALL_YML_FILE
 
 
 # Define an array of options
-options=(full_iac deploy_swarm delete_swarm destroy_iac)
+options=(full_iac delete_swarm destroy_iac)
 
 # Introduction
 echo -e "${CYAN}This script presents four options for managing your infrastructure as code (IAC) environment.${NC}\n"
 echo "The options are:"
 echo -e "  ${YELLOW}1) full_iac${NC}: Initialize the IAC environment from provisioning to deployment. ${CYAN}This option will create all of your cloud resources and will initialise docker swarm on this infra!${NC}\n"
-echo -e "  ${YELLOW}2) deploy_swarm${NC}: Deploy a Docker Swarm cluster. ${PURPLE}This option will only work if the cloud infra has been previously deployed!${NC}\n"
-echo -e "  ${YELLOW}3) delete_swarm${NC}: Deletes the Docker Swarm cluster.\n"
-echo -e "  ${YELLOW}4) destroy_iac${NC}: Completely destroys the IAC environment (${CYAN}Anything created by Terraform${NC}). Run this when you have finished testing!\n"
+echo -e "  ${YELLOW}2) delete_swarm${NC}: Deletes the Docker Swarm cluster.\n"
+echo -e "  ${YELLOW}3) destroy_iac${NC}: Completely destroys the IAC environment (${CYAN}Anything created by Terraform${NC}). Run this when you have finished testing!\n"
 
 cd $ANSIBLE_DIR
 
@@ -52,7 +51,7 @@ while true; do
       case "${options[$((choice-1))]}" in
     full_iac)
         echo "This option will initialize the infrastructure as code environment."
-         ansible-playbook init_infra.yml
+         ansible-playbook init_terraform.yml
          sleep 10
          ansible-playbook deploy_swarm.yml
          sleep 10
@@ -61,11 +60,6 @@ while true; do
          echo -e "\n"
          ssh -i test.pem $(terraform output swarm_manager_public_ip | tr -d '"') docker service ls
          break
-        ;;
-    deploy_swarm)
-        echo "This option will deploy a Docker Swarm cluster."
-        ansible-playbook deploy_swarm.yml
-        break
         ;;
     delete_swarm)
         echo "This option will delete the Docker Swarm cluster."
