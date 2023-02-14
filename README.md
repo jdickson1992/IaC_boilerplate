@@ -44,7 +44,7 @@ You should now have permissions to provision resources via terraform 🚀
 Clone the repo and cd into the directory:
 
 ```bash
-git@github.com:jdickson1992/IaC_boilerplate.git && cd IaC_boilerplate
+git clone git@github.com:jdickson1992/IaC_boilerplate.git && cd IaC_boilerplate
 ```
 
 Execute the bash script `./deploy.sh`:
