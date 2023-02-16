@@ -86,7 +86,7 @@ This will destroy everything Terraform created and clean up your dev environment
 
 ![image](https://user-images.githubusercontent.com/47530786/218748579-ea7d6797-4d18-4b94-8966-8d6f82d0eb04.png)
 
-*I always like deactivating or deleting AWS programmatic access keys when I'm finished!*
+🚨 *I always like deactivating or deleting AWS programmatic access keys when I'm finished!*
 
 
 
