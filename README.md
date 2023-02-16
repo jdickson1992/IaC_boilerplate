@@ -3,11 +3,12 @@ This repo will create a full `Infrastructure as Code` (IaC) environment, from **
 
 - `Terraform` to provision resources on the cloud ☁️
 - `Ansible` to setup infra on the cloud and initialise the **Docker Swarm** cluster 💻
-- `Ansible` to deploy the docker stacks on the cloud infra 🐳
+- `Ansible` to deploy a docker stack on the cloud infra 🐳
+     - The stack deployed will illustrate a 🔵🟢 deployment.
 
-A series of blog posts describes this repo in full...
+A series[2️⃣] of blog posts describes this repo in full...
 
-Head over to https://jdickson.dev/posts/iac/swarm_cluster/ 👀
+If you're curious, head over to https://jdickson.dev/posts/iac/swarm_cluster/ 👀
 
 ## Prerequisites 🔐
 
