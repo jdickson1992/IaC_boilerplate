@@ -6,6 +6,12 @@ This repo will create a full `Infrastructure as Code` (IaC) environment, from **
 - `Ansible` to deploy a docker stack on the cloud infra 🐳
      - The stack deployed will illustrate a 🔵🟢 deployment.
 
+If it is ran **as is**, it will create the below in the `us-east-1` region:
+- **3** manager nodes (t3.micro servers)
+- **5** worker nodes (t3.micro servers)
+
+> The number of instances and instance type can be changed by passing a **.tfvars** file to terraform or by updating the defaults found [here](https://github.com/jdickson1992/IaC_boilerplate/blob/main/terraform/variables.tf).
+
 A series(2️⃣) of blog posts describes this repo in full...
 
 If you're curious, head over to https://jdickson.dev/posts/iac/swarm_cluster/ 👀
