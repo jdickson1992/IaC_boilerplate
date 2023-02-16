@@ -5,6 +5,10 @@ This repo will create a full `Infrastructure as Code` (IaC) environment, from **
 - `Ansible` to setup infra on the cloud and initialise the **Docker Swarm** cluster 💻
 - `Ansible` to deploy the docker stacks on the cloud infra 🐳
 
+A series of blog posts describes this repo in full...
+
+Head over to https://jdickson.dev/posts/iac/swarm_cluster/ 👀
+
 ## Prerequisites 🔐
 
 -  `Ansible`   **>=2.8**
