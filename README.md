@@ -97,7 +97,7 @@ $ terraform_ssh
 
 ```
 
-> **NOTE**: In the above, we make use of a terraform output to generate a custom ssh command. See this [blog](https://jdickson.dev/posts/iac/swarm_cluster_2/) for more info
+> **NOTE**: In the above, we make use of a terraform output to generate a custom ssh command. See this [blog](https://jdickson.dev/posts/iac/swarm_cluster_2/#what-did-we-deploy-there-) for more info
 
 
 ## Blue-green deployments 🔵🟢
