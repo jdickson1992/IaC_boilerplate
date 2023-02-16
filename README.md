@@ -110,6 +110,8 @@ Under the covers this is just running a *docker service update* command, somethi
 docker service update --env-add ACTIVE_BACKEND=green-app --env-add BACKUP_BACKEND=blue-app swarm_nginx
 ```
 
+![iac6](https://user-images.githubusercontent.com/47530786/219434470-9aa6948b-e5ce-4447-84fa-1f65a89f4eed.PNG)
+
 
 ## Finished 🔚
 
