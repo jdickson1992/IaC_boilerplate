@@ -1,11 +1,9 @@
 ## What does it do? 🔎
 This repo will create a full `Infrastructure as Code` (IaC) environment, from **provisioning** to **deployment** using:
 
-- `Terraform` to provision resources on the cloud
-- `Ansible` to setup infra on the cloud and initialise the **Docker Swarm** cluster
-- `Ansible` to deploy the docker stacks on the cloud infra.
-
----
+- `Terraform` to provision resources on the cloud 🌎
+- `Ansible` to setup infra on the cloud and initialise the **Docker Swarm** cluster 💻
+- `Ansible` to deploy the docker stacks on the cloud infra 🐳
 
 ## Prerequisites 🔐
 
@@ -37,9 +35,7 @@ export AWS_PROFILE=terraform
 
 You should now have permissions to provision resources via terraform 🚀
 
----
-
-## Getting Started
+## Getting Started 🎬
 
 Clone the repo and cd into the directory:
 
@@ -64,20 +60,18 @@ This script will present you with 3 options **[Enter the number associated with 
      2. **Run this when finished testing**.
 
 
+## Blue-green deployments 🔵🟢
 
+The script `./switch_traffic.sh` can be used to illustrate how **traffic is switched** between the blue and green applications.
 
----
+Under the covers this is just running a *docker service update* command, something akin to:
 
-The script `./switch_traffic.sh` can be used to illustrate how **traffic is switched** between green / blue applications.
-
-Under the covers this is just running a *docker service update* command:
 ```
-... docker service update --env-add ACTIVE_BACKEND=green-app --env-add BACKUP_BACKEND=blue-app swarm_nginx
+docker service update --env-add ACTIVE_BACKEND=green-app --env-add BACKUP_BACKEND=blue-app swarm_nginx
 ```
 
----
 
-## Finished?
+## Finished 🔚
 
 Execute the bash script `deploy.sh` again. 
 
