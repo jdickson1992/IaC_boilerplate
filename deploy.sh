@@ -27,7 +27,7 @@ echo "dev_user: $username" > $ALL_YML_FILE
 options=(full_iac delete_swarm destroy_iac)
 
 # Introduction
-echo -e "${CYAN}This script presents four options for managing your infrastructure as code (IAC) environment.${NC}\n"
+echo -e "${CYAN}This script presents three options for managing your infrastructure as code (IAC) environment.${NC}\n"
 echo "The options are:"
 echo -e "  ${YELLOW}1) full_iac${NC}: Initialize the IAC environment from provisioning to deployment. ${CYAN}This option will create all of your cloud resources and will initialise docker swarm on this infra!${NC}\n"
 echo -e "  ${YELLOW}2) delete_swarm${NC}: Deletes the Docker Swarm cluster.\n"
