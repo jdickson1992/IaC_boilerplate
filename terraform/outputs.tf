@@ -9,7 +9,7 @@ output "vpc_cidr" {
 }
 
 output "public_subnets" {
-  description = "Computed private subnet CIDR blocks"
+  description = "Computed Public Subnet CIDR blocks"
   value = module.network.public_subnets
 }
 
