@@ -6,7 +6,7 @@ variable "region" {
 
 variable "namespace" {
   description = "The project namespace to use for unique resource naming"
-  default     = "taco-test"
+  default     = "taco"
   type        = string
 }
 
@@ -40,7 +40,7 @@ variable "swarm_worker_instance" {
 }
 
 variable "swarm_workers" {
-  description = "The number of swarm managers to create"
+  description = "The number of swarm workers to create"
   default     = 5
 }
 
