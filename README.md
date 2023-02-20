@@ -6,7 +6,7 @@ This repo will create a full `Infrastructure as Code` (IaC) environment, from **
 - `Ansible` to deploy a docker stack on the cloud infra 🐳
      - The stack deployed will illustrate a 🔵🟢 deployment.
 
-If it is ran **as is**, it will create the below in the `us-east-1` region:
+If executed, in its default state, it will create the below in the `us-east-1` region:
 
 ![aws_arch](https://user-images.githubusercontent.com/47530786/220092622-094e7dcd-21da-4d8d-93a4-3059b990318a.jpg)
 
